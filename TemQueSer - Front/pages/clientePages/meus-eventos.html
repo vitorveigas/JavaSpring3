@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Eventos - Cliente</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark-color);
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .active-nav {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+    
+    .main-content {
+      flex: 1;
+      padding: 2rem 0;
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    .event-card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+      height: 100%;
+    }
+    
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+    
+    .event-img {
+      height: 180px;
+      object-fit: cover;
+      width: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    
+    .event-date {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 5px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .payment-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .payment-status.paid {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    
+    .payment-status.pending {
+      background-color: rgba(255, 193, 7, 0.1);
+      color: var(--warning);
+      border: 1px solid var(--warning);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #6c757d;
+    }
+    
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #dee2e6;
+    }
+    
+    .footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 1.5rem 0;
+    }
+    
+    @media (max-width: 768px) {
+      .filter-buttons {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section -->
+ <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="d-flex align-items-center">
+          <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+          <span class="navbar-brand">Tem Que Ser</span>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="../clientePages/pagina-inicial-cliente.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active-nav" href="visualizar-evento-cliente.html">Eventos</a></li>
+            <li class="nav-item"><a class="nav-link" href="../clientePages/visualizar-conteudo-cliente.html">Conteúdos</a></li>
+            <li class="nav-item"><a class="nav-link" href="../clientePages/meus-eventos.html">Meus Eventos</a></li>
+            <li class="nav-item"><a class="nav-link" href="../clientePages/editar-perfil.html">Minha Conta</a></li>
+             <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+          </ul>
+          <div class="d-flex ms-3">
+            <a class="text-dark mx-2" href="https://wa.me/5531997388713?text=Olá gostaria de conversar sobre a tem que ser"><i class="bi bi-whatsapp"></i></a>
+            <a class="text-dark mx-2" href="#"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Section -->
+  <main class="main-content">
+    <div class="container py-4">
+      <h1 class="section-title">Meus Eventos</h1>
+      
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" id="search-input" placeholder="Buscar eventos...">
+          </div>
+        </div>
+        <div class="col-md-6 filter-buttons">
+          <div class="btn-group float-md-end" role="group">
+            <button type="button" class="btn btn-outline-secondary active filter-btn" data-filter="all">Todos</button>
+            <button type="button" class="btn btn-outline-secondary filter-btn" data-filter="paid">Pagos</button>
+            <button type="button" class="btn btn-outline-secondary filter-btn" data-filter="pending">Pendentes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4" id="events-container">
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <p class="mt-2">Carregando seus eventos...</p>
+        </div>
+      </div>
+
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <i class="bi bi-calendar-x empty-state-icon"></i>
+        <h3>Nenhum evento encontrado</h3>
+        <p>Você não está inscrito em nenhum evento no momento.</p>
+        <a href="../clientePages/visualizar-evento-cliente.html" class="btn btn-primary mt-3">
+          <i class="bi bi-calendar-plus me-2"></i> Ver eventos disponíveis
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="d-flex align-items-center">
+            <img src="../img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid me-3" width="40" height="40">
+            <h5 class="mb-0">TemQueSer</h5>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">© 2025 TemQueSer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Application Script -->
+  <script>
+    // Função para decodificar o token JWT
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // DOM Elements
+    const eventsContainer = document.getElementById('events-container');
+    const emptyState = document.getElementById('empty-state');
+    const searchInput = document.getElementById('search-input');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    // Load client events when page loads
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('jwtToken');
+      
+      // Check if user is authenticated
+      if (!token) {
+        alert('Você precisa estar logado para acessar esta página.');
+        window.location.href = '../pagina-home.html';
+        return;
+      }
+
+      try {
+        // Extract user ID from JWT token
+        const decodedToken = parseJwt(token);
+        const userId = decodedToken?.sub;
+        
+        if (!userId) {
+          throw new Error('ID do cliente não encontrado no token. Faça login novamente.');
+        }
+
+        // Load events for this client
+        await loadClientEvents(userId);
+        setupEventListeners();
+      } catch (error) {
+        showErrorState(error);
+        console.error('Erro:', error);
+      }
+    });
+
+    // API Functions
+    async function fetchClientEvents(userId) {
+      const response = await fetch(`http://localhost:8080/inscricoes/cliente/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao carregar eventos');
+      }
+
+      return await response.json();
+    }
+
+    // UI Functions
+    async function loadClientEvents(userId) {
+      try {
+        showLoadingState();
+        
+        const inscricoes = await fetchClientEvents(userId);
+        
+        if (inscricoes.length === 0) {
+          showEmptyState();
+          return;
+        }
+
+        renderEvents(inscricoes);
+      } catch (error) {
+        showErrorState(error);
+      }
+    }
+
+    function showLoadingState() {
+      eventsContainer.innerHTML = `
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <p class="mt-2">Carregando seus eventos...</p>
+        </div>
+      `;
+      emptyState.style.display = 'none';
+    }
+
+    function showEmptyState() {
+      eventsContainer.style.display = 'none';
+      emptyState.style.display = 'block';
+    }
+
+    function showErrorState(error) {
+      let errorMessage = error.message;
+      let action = `
+        <button class="btn btn-primary" onclick="window.location.reload()">
+          <i class="bi bi-arrow-clockwise me-2"></i> Tentar novamente
+        </button>
+      `;
+      
+      if (errorMessage.includes('ID do cliente') || errorMessage.includes('token')) {
+        errorMessage = 'Sessão inválida. Por favor, faça login novamente.';
+        action = `
+          <a href="../pagina-home.html" class="btn btn-danger">
+            <i class="bi bi-box-arrow-in-right me-2"></i> Fazer login
+          </a>
+        `;
+      }
+
+      eventsContainer.innerHTML = `
+        <div class="col-12">
+          <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            ${errorMessage}
+          </div>
+          <div class="d-grid gap-2 mt-3">
+            ${action}
+          </div>
+        </div>
+      `;
+      emptyState.style.display = 'none';
+    }
+
+   
+            function renderEvents(inscricoes) {
+    eventsContainer.innerHTML = '';
+    
+    inscricoes.forEach(inscricao => {
+        const evento = inscricao.evento;
+        const eventDate = new Date(evento.dataEvento);
+        const formattedDate = eventDate.toLocaleDateString('pt-BR');
+        const formattedTime = eventDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        
+        // Número de WhatsApp da empresa (substitua pelo número real)
+        const whatsappNumber = '5531997388713'
+        // Mensagem padrão para o WhatsApp
+        const whatsappMessage = `Ola gostaria de falar sobre o evento: "${evento.tituloEvento}". Como posso proceder?`;
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+        
+        const eventCard = document.createElement('div');
+        eventCard.className = 'col-md-6 col-lg-4';
+        eventCard.dataset.paymentStatus = inscricao.pago ? 'paid' : 'pending';
+        eventCard.dataset.eventName = evento.tituloEvento.toLowerCase();
+        
+        eventCard.innerHTML = `
+            <div class="card event-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="event-date">
+                            <i class="bi bi-calendar-event me-1"></i>
+                            ${formattedDate} às ${formattedTime}
+                        </span>
+                        <span class="payment-status ${inscricao.pago ? 'paid' : 'pending'}">
+                            <i class="bi ${inscricao.pago ? 'bi-check-circle' : 'bi-clock'} me-1"></i>
+                            ${inscricao.pago ? 'Pago' : 'Pendente'}
+                        </span>
+                    </div>
+                    <h5 class="card-title">${evento.tituloEvento}</h5>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="badge bg-secondary">${evento.categoria || 'Geral'}</span>
+                        <div>
+                            ${!inscricao.pago ? `
+                                <a href="${whatsappLink}" target="_blank" class="btn btn-sm btn-success me-2">
+                                    <i class="bi bi-whatsapp me-1"></i> Pagar
+                                </a>
+                            ` : ''}
+                                                        <button class="btn btn-sm btn-outline-danger cancel-inscription" data-inscription-id="${inscricao.id}">
+                                <i class="bi bi-trash me-1"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        eventsContainer.appendChild(eventCard);
+    });
+
+    // Adiciona event listeners para os botões de cancelamento
+    document.querySelectorAll('.cancel-inscription').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const inscriptionId = e.currentTarget.dataset.inscriptionId;
+            if (confirm('Tem certeza que deseja cancelar sua inscrição neste evento?')) {
+                try {
+                    await deleteInscription(inscriptionId);
+                    // Recarrega os eventos após a exclusão
+                    const token = localStorage.getItem('jwtToken');
+                    const decodedToken = parseJwt(token);
+                    const userId = decodedToken?.sub;
+                    await loadClientEvents(userId);
+                } catch (error) {
+                    console.error('Erro ao cancelar inscrição:', error);
+                    alert('Ocorreu um erro ao cancelar a inscrição. Por favor, tente novamente.');
+                }
+            }
+        });
+    });
+}
+
+// Função para deletar a inscrição
+async function deleteInscription(inscriptionId) {
+    const response = await fetch(`http://localhost:8080/inscricoes/${inscriptionId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Falha ao cancelar inscrição');
+    }
+
+    return response;
+}
+        
+        
+    
+
+
+    // Event Listeners and Filtering
+    function setupEventListeners() {
+      // Search functionality
+      searchInput.addEventListener('input', filterEvents);
+
+      // Filter buttons
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          filterEvents();
+        });
+      });
+    }
+
+    function filterEvents() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const filter = document.querySelector('.filter-btn.active').dataset.filter;
+      let hasVisibleCards = false;
+      
+      document.querySelectorAll('#events-container > div').forEach(card => {
+        const eventName = card.dataset.eventName;
+        const paymentStatus = card.dataset.paymentStatus;
+        
+        const matchesSearch = eventName.includes(searchTerm);
+        const matchesFilter = filter === 'all' || paymentStatus === filter;
+        
+        if (matchesSearch && matchesFilter) {
+          card.style.display = 'block';
+          hasVisibleCards = true;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show empty state if no cards are visible
+      if (!hasVisibleCards) {
+        if (searchTerm === '' && filter === 'all') {
+          showEmptyState();
+        } else {
+          eventsContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+              <i class="bi bi-search" style="font-size: 2rem; color: #6c757d;"></i>
+              <h4 class="mt-3">Nenhum evento encontrado</h4>
+              <p>Não há eventos que correspondam aos critérios de busca.</p>
+              <button class="btn btn-outline-secondary" onclick="clearFilters()">
+                <i class="bi bi-arrow-counterclockwise me-2"></i> Limpar filtros
+              </button>
+            </div>
+          `;
+        }
+      } else {
+        emptyState.style.display = 'none';
+      }
+    }
+
+    // Clear all filters
+    window.clearFilters = function() {
+      searchInput.value = '';
+      filterButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === 'all') {
+          btn.classList.add('active');
+        }
+      });
+      filterEvents();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+    <title>Gerenciar Conteúdo - Sócio</title>
+    <style>
+        :root {
+            --primary-color: #1b4332;
+            --secondary-color: #2d6a4f;
+            --accent-color: #40916c;
+            --light-color: #d8f3dc;
+            --dark-color: #081c15;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        #formCriarConteudo {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(64, 145, 108, 0.25);
+        }
+        
+        #previewImagem {
+            max-height: 250px;
+            max-width: 100%;
+            display: none;
+            margin-top: 1rem;
+            border: 2px solid var(--light-color);
+            border-radius: 8px;
+            padding: 8px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+        }
+        
+        .btn-success {
+            background-color: var(--accent-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group-text {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: 1px solid #ced4da;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .container {
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+        }
+        
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            #formCriarConteudo {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+  <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="../socioPages/pagina-inicial-socio.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-conteudo-socio.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-evento-socio.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="calendario-socio-normal.html">Calendário</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/editar-perfil-socios.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    
+<body class="py-4">
+    <div class="container">
+        <h1><i class="bi bi-file-earmark-text me-2"></i> Gerenciar Conteúdo</h1>
+        
+        <div id="formCriarConteudo">
+            <div class="header-section">
+                <h2 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Criar Novo Conteúdo</h2>
+            </div>
+    
+            <div class="mb-4">
+                <label for="tituloConteudo" class="form-label">Título</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+                    <input type="text" class="form-control" id="tituloConteudo" placeholder="Digite o título do conteúdo" required>
+                </div>
+                <div class="error" id="tituloError"></div>
+            </div>
+    
+            <div class="mb-4">
+                <label for="descricaoConteudo" class="form-label">Descrição</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-text-paragraph"></i></span>
+                    <textarea class="form-control" id="descricaoConteudo" rows="5" placeholder="Digite a descrição do conteúdo" required></textarea>
+                </div>
+                <div class="error" id="descricaoError"></div>
+            </div>
+    
+            <div class="mb-4">
+                <label for="dataConteudo" class="form-label">Data do Conteúdo</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+                    <input type="date" class="form-control" id="dataConteudo" required>
+                </div>
+                <div class="error" id="dataError"></div>
+            </div>
+    
+            <div class="mb-4">
+                <label for="imgUrlConteudo" class="form-label">URL da Imagem</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-image"></i></span>
+                    <input type="url" class="form-control" id="imgUrlConteudo" placeholder="Digite a URL da imagem">
+                </div>
+                <div class="error" id="imgUrlError"></div>
+                <div class="preview-container">
+                    <img id="previewImagem" src="#" alt="Pré-visualização">
+                </div>
+            </div>
+    
+            <div class="d-flex justify-content-between mt-5">
+                <button type="button" class="btn btn-secondary" onclick="fecharFormularioCriar()">
+                    <i class="bi bi-x-circle me-2"></i> Cancelar
+                </button>
+                <button type="button" class="btn btn-success" onclick="criarConteudo()">
+                    <i class="bi bi-save me-2"></i> Salvar Conteúdo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- O JavaScript original permanece exatamente o mesmo -->
+    <script>
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            alert('Você precisa estar logado para acessar esta página.');
+            window.location.href = '../index.html';
+        }
+
+        // Função para criar conteúdo
+        function criarConteudo() {
+            const titulo = document.getElementById('tituloConteudo').value;
+            const descricao = document.getElementById('descricaoConteudo').value;
+            const data = document.getElementById('dataConteudo').value;
+            const imgUrl = document.getElementById('imgUrlConteudo').value;
+
+            let error = false;
+
+            // Validação simples para garantir que os campos não estão vazios
+            if (!titulo) {
+                document.getElementById('tituloError').textContent = 'O título é obrigatório.';
+                error = true;
+            } else {
+                document.getElementById('tituloError').textContent = '';
+            }
+
+            if (!descricao) {
+                document.getElementById('descricaoError').textContent = 'A descrição é obrigatória.';
+                error = true;
+            } else {
+                document.getElementById('descricaoError').textContent = '';
+            }
+
+            if (!data) {
+                document.getElementById('dataError').textContent = 'A data é obrigatória.';
+                error = true;
+            } else {
+                document.getElementById('dataError').textContent = '';
+            }
+
+            if (error) return;
+
+            // Envio da requisição para criar o conteúdo
+            fetch('http://localhost:8080/conteudos', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    tituloConteudo: titulo,
+                    descricaoConteudo: descricao,
+                    dataConteudo: data,
+                    imgUrlConteudo: imgUrl
+                })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao criar conteúdo');
+                return response.json();
+            })
+            .then(data => {
+                alert('Conteúdo criado com sucesso!');
+                window.location.href = 'visualizar-conteudo-socio.html';
+                // Atualiza a lista de conteúdos ou faz outras ações
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Erro ao criar conteúdo. Tente novamente.');
+            });
+        }
+
+        function fecharFormularioCriar() {
+            // Fechar ou resetar o formulário
+            document.getElementById('formCriarConteudo').reset();
+        }
+
+        // Função para buscar os conteúdos
+        function fetchConteudos() {
+            fetch('http://localhost:8080/conteudos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao buscar conteúdos');
+                return response.json();
+            })
+            .then(data => {
+                const container = document.getElementById('conteudos');
+                container.innerHTML = ''; // Limpa a lista antes de atualizar
+
+                if (data.length === 0) {
+                    container.innerHTML = "<p>Nenhum conteúdo encontrado.</p>";
+                    return;
+                }
+
+                data.forEach(conteudo => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.innerHTML = `
+                        <h3>${conteudo.tituloConteudo}</h3>
+                        <p>${conteudo.descricaoConteudo}</p>
+                        <small>Data: ${new Date(conteudo.dataConteudo).toLocaleDateString()}</small>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Erro ao carregar os conteúdos. Tente novamente.');
+            });
+        }
+    </script>
+    <script src="../js/img-previa.js"></script>
+</body>
+</html>

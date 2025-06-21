@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Participantes - Sócio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after,
+    .active-nav::after {
+      width: 100%;
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    .participante-card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+    }
+    
+    .participante-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .btn-voltar {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-voltar:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #6c757d;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #dee2e6;
+    }
+
+    /* Estilos para o toggle de pagamento */
+    .form-switch .form-check-input {
+      width: 2.5em;
+      height: 1.5em;
+      margin-right: 0.5em;
+      cursor: pointer;
+    }
+
+    .form-switch .form-check-label {
+      cursor: pointer;
+      user-select: none;
+      font-weight: 500;
+    }
+
+    .participante-card.border-success {
+      border-left: 4px solid var(--success) !important;
+    }
+
+    .participante-card.border-warning {
+      border-left: 4px solid var(--warning) !important;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--success);
+      border-color: var(--success);
+    }
+
+    .form-check-input:not(:checked) {
+      background-color: var(--warning);
+      border-color: var(--warning);
+    }
+
+    /* Estilos para os toasts */
+    .toast {
+      opacity: 1 !important;
+    }
+
+    .bg-success {
+      background-color: var(--success) !important;
+    }
+
+    .bg-warning {
+      background-color: var(--warning) !important;
+    }
+
+    .bg-danger {
+      background-color: var(--danger) !important;
+    }
+
+    /* Estilos para o botão de exclusão */
+    .btn-excluir {
+      transition: all 0.2s ease;
+      margin-right: 10px;
+    }
+
+    .btn-excluir:hover {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    /* Ajuste para os controles */
+    .controles-participante {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .controles-participante {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .btn-excluir {
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+ <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="../socioPages/pagina-inicial-socio.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-conteudo-socio.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-evento-socio.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="calendario-socio-normal.html">Calendário</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/editar-perfil-socios.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+
+  <!-- Conteúdo Principal -->
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title mb-0" id="tituloEvento">Participantes do Evento</h2>
+      <button class="btn btn-voltar" onclick="window.history.back()">
+        <i class="bi bi-arrow-left me-2"></i> Voltar
+      </button>
+    </div>
+
+    <div class="row" id="participantes-container">
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p class="mt-2">Carregando participantes...</p>
+      </div>
+    </div>
+
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <i class="bi bi-people"></i>
+      <h3>Nenhum participante encontrado</h3>
+      <p>Este evento ainda não tem participantes inscritos.</p>
+    </div>
+  </div>
+
+  <footer class="footer py-4 mt-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="d-flex align-items-center">
+            <img src="../img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid me-3" width="40" height="40">
+            <h5 class="mb-0 text-white">TemQueSer</h5>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">© 2025 TemQueSer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript Atualizado -->
+  <script>
+    // Verificação do token de autenticação
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+        alert('Você precisa estar logado para acessar esta página.');
+        window.location.href = '../pagina-home.html';
+    }
+
+    // Obtém o ID do evento da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const idEvento = urlParams.get('id');
+
+    // Elementos da UI
+    const participantesContainer = document.getElementById('participantes-container');
+    const emptyState = document.getElementById('empty-state');
+    const tituloEvento = document.getElementById('tituloEvento');
+
+    // Carrega os participantes quando a página é carregada
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!idEvento) {
+            showToast('Evento não especificado.', 'danger');
+            window.history.back();
+            return;
+        }
+        
+        carregarParticipantes(idEvento);
+    });
+
+    // Função para carregar os participantes do evento
+    async function carregarParticipantes(idEvento) {
+        try {
+            showLoadingState();
+            
+            // Carrega detalhes do evento para o título
+            const evento = await fetchWithAuth(`http://localhost:8080/eventos/${idEvento}`);
+            tituloEvento.textContent = `Participantes: ${evento.tituloEvento}`;
+
+            // Carrega as inscrições do evento
+            const inscricoes = await fetchWithAuth(`http://localhost:8080/inscricoes/evento/${idEvento}`);
+            
+            if (inscricoes.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            renderParticipantes(inscricoes);
+            
+        } catch (error) {
+            showErrorState(error, idEvento);
+        }
+    }
+
+    // Função genérica para fetch com auth
+    async function fetchWithAuth(url, options = {}) {
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            ...(options.headers || {})
+        };
+
+        const finalOptions = {
+            ...options,
+            headers,
+            credentials: 'include'
+        };
+
+        try {
+            const response = await fetch(url, finalOptions);
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `Erro na requisição: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            throw error;
+        }
+    }
+
+    // Função para atualizar o status de pagamento
+    async function atualizarStatusPagamento(idInscricao, pago) {
+        try {
+            const response = await fetch(`http://localhost:8080/inscricoes/${idInscricao}/atualizar-pagamento?pago=${pago}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Erro ao atualizar pagamento');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Erro ao atualizar pagamento:', error);
+            throw error;
+        }
+    }
+
+    // Função para excluir inscrição
+    async function excluirInscricao(idInscricao) {
+        try {
+            const response = await fetch(`http://localhost:8080/inscricoes/${idInscricao}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Erro ao excluir inscrição');
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Erro ao excluir inscrição:', error);
+            throw error;
+        }
+    }
+
+    // Funções auxiliares para estados da UI
+    function showLoadingState() {
+        participantesContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+                <p class="mt-2">Carregando participantes...</p>
+            </div>
+        `;
+        emptyState.style.display = 'none';
+    }
+
+    function showEmptyState() {
+        participantesContainer.style.display = 'none';
+        emptyState.style.display = 'block';
+    }
+
+    function showErrorState(error, idEvento) {
+        console.error('Erro:', error);
+        participantesContainer.innerHTML = `
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Ocorreu um erro ao carregar os participantes: ${error.message}
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" onclick="carregarParticipantes(${idEvento})">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Tentar novamente
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="window.history.back()">
+                        <i class="bi bi-arrow-left me-2"></i>Voltar
+                    </button>
+                </div>
+            </div>
+        `;
+        emptyState.style.display = 'none';
+    }
+
+    // Renderiza a lista de participantes
+    function renderParticipantes(inscricoes) {
+        participantesContainer.innerHTML = '';
+        participantesContainer.style.display = 'flex';
+        
+        inscricoes.forEach(inscricao => {
+            const participante = inscricao.cliente;
+            const card = document.createElement('div');
+            card.className = 'col-md-6';
+            card.id = `inscricao-${inscricao.id}`;
+            
+            card.innerHTML = `
+                <div class="card participante-card mb-3 ${inscricao.pago ? 'border-success' : 'border-warning'}">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(participante.nomeCliente)}&background=random" 
+                             class="participante-img me-4" 
+                             alt="Foto do participante">
+                        <div class="flex-grow-1">
+                            <h5 class="card-title mb-1">${participante.nomeCliente}</h5>
+                            <p class="card-text text-muted mb-1">
+                                <i class="bi bi-envelope"></i> ${participante.emailCliente}
+                            </p>
+                            <p class="card-text text-muted mb-1">
+                                <i class="bi bi-telephone"></i> ${participante.telefoneCliente || 'Não informado'}
+                            </p>
+                            <div class="controles-participante">
+                                <select class="form-select status-pagamento" 
+                                        data-inscricao-id="${inscricao.id}"
+                                        style="width: auto;">
+                                    <option value="true" ${inscricao.pago ? 'selected' : ''}>Pago</option>
+                                    <option value="false" ${!inscricao.pago ? 'selected' : ''}>Pendente</option>
+                                </select>
+                                <button class="btn btn-outline-danger btn-excluir" 
+                                        data-inscricao-id="${inscricao.id}">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </button>
+                                <small class="text-muted ms-auto">ID: ${inscricao.id}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            participantesContainer.appendChild(card);
+        });
+    }
+
+    // Manipulador de eventos para os selects de pagamento
+    document.addEventListener('change', async (e) => {
+        if (e.target.classList.contains('status-pagamento')) {
+            const select = e.target;
+            const idInscricao = select.dataset.inscricaoId;
+            const novoStatus = select.value === 'true';
+            
+            select.disabled = true;
+            
+            const card = select.closest('.participante-card');
+            const originalValue = select.value;
+            
+            try {
+                const updatedInscricao = await atualizarStatusPagamento(idInscricao, novoStatus);
+                
+                select.value = updatedInscricao.pago ? 'true' : 'false';
+                card.classList.toggle('border-success', updatedInscricao.pago);
+                card.classList.toggle('border-warning', !updatedInscricao.pago);
+                
+                showToast(`Status atualizado para: ${updatedInscricao.pago ? 'Pago' : 'Pendente'}`, 
+                         updatedInscricao.pago ? 'success' : 'warning');
+                
+            } catch (error) {
+                select.value = originalValue;
+                showToast(`Falha ao atualizar: ${error.message}`, 'danger');
+                
+            } finally {
+                select.disabled = false;
+            }
+        }
+    });
+
+    // Manipulador de eventos para o botão de exclusão
+    document.addEventListener('click', async (e) => {
+        const btnExcluir = e.target.closest('.btn-excluir');
+        if (btnExcluir) {
+            const idInscricao = btnExcluir.dataset.inscricaoId;
+            
+            if (!confirm(`Tem certeza que deseja excluir esta inscrição?`)) {
+                return;
+            }
+            
+            btnExcluir.disabled = true;
+            btnExcluir.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Excluindo...';
+            
+            try {
+                await excluirInscricao(idInscricao);
+                
+                // Remove o card da UI
+                const card = document.getElementById(`inscricao-${idInscricao}`);
+                if (card) {
+                    card.remove();
+                }
+                
+                showToast('Inscrição excluída com sucesso!', 'success');
+                
+                // Verifica se não há mais participantes
+                if (participantesContainer.children.length === 0) {
+                    showEmptyState();
+                }
+                
+            } catch (error) {
+                showToast(`Falha ao excluir: ${error.message}`, 'danger');
+                btnExcluir.disabled = false;
+                btnExcluir.innerHTML = '<i class="bi bi-trash"></i> Excluir';
+            }
+        }
+    });
+
+    // Função para mostrar toasts de feedback
+    function showToast(message, type = 'info') {
+        const toastContainer = document.createElement('div');
+        toastContainer.className = 'position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '1100';
+        
+        const toastId = `toast-${Date.now()}`;
+        
+        toastContainer.innerHTML = `
+            <div id="${toastId}" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-${type} text-white">
+                    <strong class="me-auto">Status de Pagamento</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body bg-light">
+                    <i class="bi ${type === 'success' ? 'bi-check-circle-fill text-success' : 
+                                      type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' : 
+                                      type === 'danger' ? 'bi-x-circle-fill text-danger' : 'bi-info-circle-fill text-primary'} 
+                         me-2"></i>
+                    ${message}
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(toastContainer);
+        
+        const toastElement = document.getElementById(toastId);
+        const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
+        toast.show();
+        
+        toastElement.addEventListener('hidden.bs.toast', () => {
+            toastContainer.remove();
+        });
+        
+        toastElement.querySelector('.btn-close').addEventListener('click', () => {
+            toast.hide();
+        });
+    }
+  </script>
+</body>
+</html>

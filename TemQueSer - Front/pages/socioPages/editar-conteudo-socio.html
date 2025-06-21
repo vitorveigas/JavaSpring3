@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="../css/imagem-previa.css">
+  <title>Editar Conteúdo - Sócio</title>
+  <style>
+    .bg-green-900 {
+      background-color: #1b4332;
+    }
+
+
+  </style>
+</head>
+
+<body class="bg-light py-4">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="../socioPages/pagina-inicial-socio.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-conteudo-socio.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-evento-socio.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="calendario-socio-normal.html">Calendário</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/editar-perfil-socios.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+  <!-- Conteúdo -->
+  <div class="container">
+    <h1 class="text-center mb-4">Editar Conteúdo</h1>
+    <div class="bg-white p-4 rounded shadow-sm mx-auto" style="max-width: 600px;">
+      <div class="bg-green-900 text-white rounded p-3 mb-4">
+        <h4 class="mb-0">Editar Conteúdo</h4>
+      </div>
+
+      <form id="formEditarConteudo">
+        <div class="mb-3">
+          <label for="tituloConteudo" class="form-label fw-bold">Título</label>
+          <input type="text" class="form-control" id="tituloConteudo" placeholder="Digite o título do conteúdo" required />
+          <div class="text-danger small" id="tituloError"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="descricaoConteudo" class="form-label fw-bold">Descrição</label>
+          <textarea class="form-control" id="descricaoConteudo" rows="4" placeholder="Digite a descrição do conteúdo" required></textarea>
+          <div class="text-danger small" id="descricaoError"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dataConteudo" class="form-label fw-bold">Data</label>
+          <input type="date" class="form-control" id="dataConteudo" required />
+          <div class="text-danger small" id="dataError"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="imgUrlConteudo" class="form-label fw-bold">URL da Imagem</label>
+            <input type="url" class="form-control" id="imgUrlConteudo" placeholder="Digite a URL da imagem">
+            <div class="error" id="imgUrlError"></div>
+            <img id="previewImagem" src="#" alt="Pré-visualização" class="mt-2">
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <div>
+              <button type="submit" class="btn btn-success px-4">Salvar</button>
+              <a href="conteudo.html" class="btn btn-secondary px-4">Cancelar</a>
+          </div>
+          <!-- Botão de Excluir - Adicione essa div -->
+          <div id="containerExcluir" style="display: none;">
+              <button type="button" id="btnExcluir" class="btn btn-danger px-4">Excluir Conteúdo</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white mt-5 pt-4 pb-3">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div class="d-flex align-items-center mb-3 mb-md-0">
+        <img src="/TemQueSer - Front/img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid" width="50" height="50" />
+        <div class="ms-2">
+          <p class="mb-0 fw-bold">Tem</p>
+          <p class="mb-0 fw-bold">Que</p>
+          <p class="mb-0 fw-bold">Ser</p>
+        </div>
+      </div>
+      <div class="d-flex">
+        <a class="text-white mx-2" href="#">Sobre nós</a>
+        <a class="text-white mx-2" href="#">Contato</a>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <p class="mb-0">© 2025 Todos os Direitos reservados por TemQueSer</p>
+    </div>
+  </footer>
+
+  <!-- Script JS -->
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificação de autenticação
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+        alert('Você precisa estar logado para acessar esta página.');
+        window.location.href = '../login.html';
+        return;
+    }
+
+    // Configurações
+    const apiUrl = "http://localhost:8080/conteudos";
+    const params = new URLSearchParams(window.location.search);
+    const idConteudo = params.get("id");
+
+    // Elementos do formulário
+    const form = document.getElementById("formEditarConteudo");
+    const tituloInput = document.getElementById("tituloConteudo");
+    const descricaoInput = document.getElementById("descricaoConteudo");
+    const dataInput = document.getElementById("dataConteudo");
+    const imgUrlInput = document.getElementById("imgUrlConteudo");
+    const containerExcluir = document.getElementById("containerExcluir");
+    const btnExcluir = document.getElementById("btnExcluir");
+
+    // Mostrar botão de excluir se estiver editando
+    if (idConteudo) {
+        containerExcluir.style.display = 'block';
+    }
+
+    // Função para carregar dados
+    async function carregarDadosConteudo() {
+        if (!idConteudo) return;
+
+        try {
+            const resposta = await fetch(`${apiUrl}/${idConteudo}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (resposta.status === 401) {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw new Error('Erro ao carregar conteúdo');
+            }
+
+            const conteudo = await resposta.json();
+            
+            tituloInput.value = conteudo.tituloConteudo || '';
+            descricaoInput.value = conteudo.descricaoConteudo || '';
+            dataInput.value = conteudo.dataConteudo ? conteudo.dataConteudo.split('T')[0] : '';
+            imgUrlInput.value = conteudo.imgUrlConteudo || '';
+
+        } catch (error) {
+            console.error('Erro ao carregar:', error);
+            alert(`Erro: ${error.message}`);
+        }
+    }
+
+    // Função para salvar
+    async function salvarConteudo(event) {
+        event.preventDefault();
+
+        if (!tituloInput.value || !descricaoInput.value || !dataInput.value) {
+            alert('Preencha todos os campos obrigatórios!');
+            return;
+        }
+
+        const dados = {
+            tituloConteudo: tituloInput.value,
+            descricaoConteudo: descricaoInput.value,
+            dataConteudo: dataInput.value,
+            imgUrlConteudo: imgUrlInput.value || null
+        };
+
+        try {
+            const resposta = await fetch(idConteudo ? `${apiUrl}/${idConteudo}` : apiUrl, {
+                method: idConteudo ? 'PUT' : 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            if (!resposta.ok) {
+                const erro = await resposta.json();
+                throw new Error(erro.message || 'Erro ao salvar');
+            }
+
+            alert('Conteúdo salvo com sucesso!');
+            window.location.href = 'visualizar-conteudo-socio.html';
+        } catch (error) {
+            console.error('Erro:', error);
+            alert(`Erro: ${error.message}`);
+        }
+    }
+
+    // Função para excluir
+    async function excluirConteudo() {
+        if (!confirm('Tem certeza que deseja excluir este conteúdo permanentemente?')) {
+            return;
+        }
+
+        try {
+            const resposta = await fetch(`${apiUrl}/excluirConteudo/${idConteudo}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!resposta.ok) {
+                throw new Error('Erro ao excluir conteúdo');
+            }
+
+            alert('Conteúdo excluído com sucesso!');
+            window.location.href = 'pagina-inicial-socio.html';
+        } catch (error) {
+            console.error('Erro:', error);
+            alert(`Erro ao excluir: ${error.message}`);
+        }
+    }
+
+    // Event listeners
+    form.addEventListener('submit', salvarConteudo);
+    btnExcluir.addEventListener('click', excluirConteudo);
+    
+    // Carrega os dados ao abrir a página
+    carregarDadosConteudo();
+});
+  </script>
+  
+  <script src="../js/img-previa.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

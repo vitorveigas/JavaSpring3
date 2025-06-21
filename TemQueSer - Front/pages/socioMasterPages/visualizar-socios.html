@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciar Sócios - TemQueSer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .bg-gradient-dark-green {
+      background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after,
+    .active-nav::after {
+      width: 100%;
+    }
+    
+    .management-card {
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      border: none;
+      overflow: hidden;
+    }
+    
+    .btn-success {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-success:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-action {
+      padding: 0.35rem 0.75rem;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-action:hover {
+      transform: translateY(-2px);
+    }
+    
+    .table-hover tbody tr:hover {
+      background-color: rgba(216, 243, 220, 0.3);
+    }
+    
+    .table thead th {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--secondary-color);
+    }
+    
+    .footer {
+      background-color: var(--dark-color);
+    }
+    
+    .social-icon {
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      color: var(--light-color);
+      transform: translateY(-3px);
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <!-- Header -->
+ <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="pagina-inicial-socio-master.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="visualizar-conteudo-socio-master.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="visualizar-evento-socio-master.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioMasterPages/calendario-socio.html">Calendário</a></li>
+                     <li class="nav-item"><a class="nav-link text-dark" href="../socioMasterPages/visualizar-socios.html">Sócios</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="editar-perfil-socio-master.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+  <!-- Conteúdo principal -->
+  <main class="flex-grow-1 py-5 bg-gradient-dark-green">
+    <div class="container">
+      <div class="management-card bg-white p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="section-title mb-0">Gerenciamento de Sócios</h2>
+          <a href="cadastro-socio.html" class="btn btn-success d-flex align-items-center gap-2">
+            <i class="bi bi-plus-circle"></i> <span>Novo Sócio</span>
+          </a>
+        </div>
+
+        <!-- Tabela de sócios -->
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th class="text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="sociosTabela">
+              <!-- Os dados dos sócios serão preenchidos dinamicamente aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <div class="d-flex align-items-center mb-3">
+            <img src="../img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid me-3" width="50" height="50">
+            <h3 class="mb-0 text-white">TemQueSer</h3>
+          </div>
+          <p>Conectando pessoas através de experiências culturais exclusivas.</p>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+          <h5 class="mb-3">Links</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Início</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Eventos</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Sobre Nós</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contato</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="mb-3">Contato</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@temqueser.com</li>
+            <li class="mb-2"><i class="bi bi-telephone me-2"></i> (11) 1234-5678</li>
+            <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> São Paulo, SP</li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h5 class="mb-3">Redes Sociais</h5>
+          <div class="d-flex gap-3">
+            <a href="#" class="social-icon"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-instagram fs-4"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-twitter-x fs-4"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-whatsapp fs-4"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 bg-light">
+      <div class="text-center">
+        <p class="mb-0">© 2025 TemQueSer. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../js/gerenciar-socio.js"></script>
+</body>
+</html>

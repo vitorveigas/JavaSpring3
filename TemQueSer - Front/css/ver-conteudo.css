@@ -1,0 +1,17 @@
+/* Responsividade para celular */
+@media (max-width: 768px) {
+    /* Ajusta o painel de detalhes para ficar abaixo do card no celular */
+    #detalheConteudo {
+      display: none; /* Esconde inicialmente o painel de detalhes no celular */
+      margin-top: 20px;
+    }
+  
+    .conteudo-img {
+      height: 250px; /* Reduz a altura da imagem no celular */
+    }
+  
+    .conteudo-selecionado {
+      margin-bottom: 15px;
+    }
+  }
+  

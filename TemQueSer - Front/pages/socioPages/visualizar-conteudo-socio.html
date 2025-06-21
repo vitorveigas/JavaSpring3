@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - SócioMaster</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      line-height: 1.6;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-link {
+      font-weight: 500;
+    }
+    
+    .blog-header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 3rem;
+      background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .blog-title {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+    
+    .blog-description {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .blog-post {
+      margin-bottom: 4rem;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+    
+    .blog-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .post-thumbnail {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    
+    .post-body {
+      padding: 2rem;
+    }
+    
+    .post-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--dark-color);
+    }
+    
+    .post-meta {
+      color: #6c757d;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .post-content {
+      margin-bottom: 1.5rem;
+      color: #495057;
+    }
+    
+    .blog-sidebar {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+    
+    .sidebar-title {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--light-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .sidebar-item {
+      margin-bottom: 1rem;
+    }
+    
+    .footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+    
+    .btn-novo-conteudo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-novo-conteudo:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      color: white;
+    }
+    
+    @media (max-width: 768px) {
+      .blog-title {
+        font-size: 2rem;
+      }
+      
+      .post-thumbnail {
+        height: 200px;
+      }
+      
+      .post-title {
+        font-size: 1.5rem;
+      }
+      
+      .btn-novo-conteudo {
+        position: static;
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+ <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="pagina-inicial-socio.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-conteudo-socio.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-evento-socio.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioMasterPages/calendario-socio.html">Calendário</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/editar-perfil-socios.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+
+
+  <!-- Cabeçalho do Blog -->
+  <div class="blog-header text-center">
+    <div class="container">
+      <button class="btn btn-novo-conteudo" onclick="novoConteudo()">
+        <i class="bi bi-plus-lg"></i> Novo Conteúdo
+      </button>
+      <h1 class="blog-title">Blog TemQueSer</h1>
+      <p class="blog-description">Conteúdos exclusivos para você</p>
+    </div>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <div class="row">
+      <!-- Listagem de Posts -->
+      <div class="col-lg-8" id="conteudos">
+        <!-- Os posts serão carregados aqui via JavaScript -->
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="blog-sidebar">
+          <h3 class="sidebar-title">Sobre o Blog</h3>
+          <p>Este é o espaço onde compartilhamos conteúdos exclusivos para você por dentro de tudo da Tem que Ser!</p>
+        </div>
+        
+        <div class="blog-sidebar">
+          <h3 class="sidebar-title">Posts Recentes</h3>
+          <div id="recent-posts">
+            <!-- Será preenchido via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="d-flex align-items-center">
+            <img src="../img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid me-3" width="40" height="40">
+            <h5 class="mb-0 text-white">TemQueSer</h5>
+          </div>
+          <p class="mt-3 mb-0 text-white-50">Compartilhando conhecimento e criando conexões.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0 text-white-50">© 2025 TemQueSer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS Lógica -->
+  <script>
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      alert('Você precisa estar logado para acessar esta página.');
+      window.location.href = '../pagina-home.html';
+    }
+
+    const apiUrl = "http://localhost:8080/conteudos";
+    const conteudosContainer = document.getElementById("conteudos");
+    const recentPostsContainer = document.getElementById("recent-posts");
+
+    document.addEventListener("DOMContentLoaded", carregarConteudos);
+
+    // Função para carregar os conteúdos
+    async function carregarConteudos() {
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error("Erro ao buscar conteúdos");
+
+        const conteudos = await response.json();
+        conteudosContainer.innerHTML = "";
+
+        if (conteudos.length === 0) {
+          conteudosContainer.innerHTML = `
+            <div class="alert alert-info">
+              Nenhum conteúdo encontrado. Volte mais tarde!
+            </div>
+          `;
+          return;
+        }
+
+        // Ordena por data mais recente primeiro
+        conteudos.sort((a, b) => new Date(b.dataConteudo) - new Date(a.dataConteudo));
+        
+        // Renderiza todos os posts
+        conteudos.forEach(conteudo => {
+          const postHtml = `
+            <article class="blog-post" id="post-${conteudo.idConteudo}">
+              ${conteudo.imgUrlConteudo ? `
+                <img src="${conteudo.imgUrlConteudo}" class="post-thumbnail" alt="${conteudo.tituloConteudo}">
+              ` : `
+                <div class="post-thumbnail bg-light d-flex align-items-center justify-content-center">
+                  <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                </div>
+              `}
+              <div class="post-body">
+                <h2 class="post-title">${conteudo.tituloConteudo}</h2>
+                <div class="post-meta">
+                  <span><i class="bi bi-calendar me-1"></i> ${new Date(conteudo.dataConteudo).toLocaleDateString('pt-BR')}</span>
+                </div>
+                <div class="post-content">
+                  ${conteudo.descricaoConteudo}
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-sm btn-outline-secondary" onclick="gerenciarConteudo(${conteudo.idConteudo})">
+                    <i class="bi bi-gear"></i> Gerenciar
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+          conteudosContainer.innerHTML += postHtml;
+        });
+
+        // Preenche os posts recentes (os 3 mais recentes)
+        recentPostsContainer.innerHTML = conteudos.slice(0, 3).map(conteudo => `
+          <div class="sidebar-item">
+            <a href="#" class="text-decoration-none" onclick="event.preventDefault(); document.getElementById('post-${conteudo.idConteudo}').scrollIntoView({ behavior: 'smooth' });">
+              <h6 class="mb-1">${conteudo.tituloConteudo}</h6>
+              <small class="text-muted">${new Date(conteudo.dataConteudo).toLocaleDateString('pt-BR')}</small>
+            </a>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error("Erro ao carregar conteúdos:", error);
+        conteudosContainer.innerHTML = `
+          <div class="alert alert-danger">
+            Ocorreu um erro ao carregar os conteúdos. Por favor, tente novamente mais tarde.
+          </div>
+        `;
+      }
+    }
+
+    // Função para gerenciar o conteúdo (redireciona para a página de edição)
+    function gerenciarConteudo(idConteudo) {
+      window.location.href = `editar-conteudo-socio.html?id=${idConteudo}`;
+    }
+
+    // Função para criar novo conteúdo
+    function novoConteudo() {
+      window.location.href = "gerenciar-conteudo-socio.html";
+    }
+  </script>
+</body>
+</html>

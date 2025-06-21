@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizar Eventos - Sócio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after,
+    .active-nav::after {
+      width: 100%;
+    }
+    
+    .sidebar {
+      background-color: white;
+      border-right: 1px solid #e9ecef;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .content-area {
+      padding: 2rem;
+      background-color: #f8f9fa;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+    
+    .evento-card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .evento-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+    
+    .evento-card.active {
+      border-left: 4px solid var(--accent-color);
+      background-color: var(--light-color);
+    }
+    
+    .evento-img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .detalhe-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .btn-gerenciar {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-gerenciar:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    .footer {
+      background-color: var(--dark-color);
+      color: white;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #6c757d;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #dee2e6;
+    }
+    
+    .info-badge {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .info-badge i {
+      margin-right: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+      }
+      
+      .content-area {
+        height: auto;
+      }
+      
+      .evento-img {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="pagina-inicial-socio-master.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="visualizar-conteudo-socio-master.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="visualizar-evento-socio-master.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioMasterPages/calendario-socio.html">Calendário</a></li>
+                     <li class="nav-item"><a class="nav-link text-dark" href="../socioMasterPages/visualizar-socios.html">Sócios</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="editar-perfil-socio-master.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+
+  <!-- Conteúdo Principal -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar com os cards -->
+      <div class="col-lg-4 col-md-5 p-0 sidebar">
+        <div class="p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="section-title mb-0">Eventos</h4>
+            <a href="../socioPages/criar-evento.html" class="btn btn-sm btn-gerenciar">
+              <i class="bi bi-plus-circle me-1"></i> Novo Evento
+            </a>
+          </div>
+          <div id="eventos"></div>
+        </div>
+      </div>
+      
+      <!-- Área de detalhes -->
+      <div class="col-lg-8 col-md-7 content-area" id="detalheEvento">
+        <div class="empty-state">
+          <i class="bi bi-calendar-event"></i>
+          <h3>Selecione um evento</h3>
+          <p>Os detalhes aparecerão aqui assim que você clicar em um item do lado esquerdo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer py-4 mt-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="d-flex align-items-center">
+            <img src="../img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid me-3" width="40" height="40">
+            <h5 class="mb-0 text-white">TemQueSer</h5>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">© 2025 TemQueSer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS Lógica para Eventos -->
+  <script>
+  // Verificação do token de autenticação
+const token = localStorage.getItem('jwtToken');
+if (!token) {
+    alert('Você precisa estar logado para acessar esta página.');
+    window.location.href = '../pagina-home.html';
+}
+
+const apiUrl = "http://localhost:8080/eventos";
+const eventosContainer = document.getElementById("eventos");
+const detalheEvento = document.getElementById("detalheEvento");
+
+// Carrega os eventos quando a página é carregada
+document.addEventListener("DOMContentLoaded", carregarEventos);
+
+// Função para carregar os eventos
+async function carregarEventos() {
+    try {
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Erro ao buscar eventos");
+
+        const eventos = await response.json();
+        eventosContainer.innerHTML = "";
+
+        if (eventos.length === 0) {
+            eventosContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="bi bi-calendar-x"></i>
+                    <p>Nenhum evento encontrado</p>
+                </div>
+            `;
+            return;
+        }
+
+        eventos.forEach(evento => {
+            const card = document.createElement("div");
+            card.className = "card mb-3 evento-card";
+            card.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">${evento.tituloEvento}</h5>
+                    ${evento.detalheEvento ? `<p class="card-text text-muted">${evento.detalheEvento.substring(0, 100)}${evento.detalheEvento.length > 100 ? '...' : ''}</p>` : ''}
+                    <p class="card-text text-muted">
+                        <small><i class="bi bi-calendar me-1"></i> ${formatarData(evento.dataEvento)}</small>
+                    </p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-light text-dark mb-1 me-1">
+                            <i class="bi bi-geo-alt"></i> ${evento.localEvento || 'Local não informado'}
+                        </span>
+                    </div>
+                </div>
+            `;
+            card.addEventListener("click", () => mostrarDetalhesEvento(evento, card));
+            eventosContainer.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar eventos:", error);
+        alert("Erro ao carregar eventos: " + error.message);
+    }
+}
+
+// Função para mostrar os detalhes do evento
+function mostrarDetalhesEvento(evento, card) {
+    // Remove a classe 'active' de todos os cards
+    document.querySelectorAll('.evento-card').forEach(c => {
+        c.classList.remove('active');
+    });
+    
+    // Adiciona a classe 'active' ao card selecionado
+    card.classList.add('active');
+
+    const eventoDetalhe = `
+        <div class="detalhe-card bg-white">
+            ${evento.imgUrlEvento ? ` 
+                <img src="${evento.imgUrlEvento}" class="evento-img" alt="Imagem do evento">` 
+                : '<div class="bg-light text-center py-5"><i class="bi bi-image text-muted" style="font-size: 3rem;"></i><p class="text-muted mt-2">Sem imagem disponível</p></div>'}
+            <div class="card-body p-4">
+                <h2 class="mb-3">${evento.tituloEvento}</h2>
+                
+                ${evento.detalheEvento ? `
+                <div class="mb-4">
+                    <h5 class="mb-2"><i class="bi bi-card-text"></i> Detalhes</h5>
+                    <p class="card-text">${evento.detalheEvento}</p>
+                </div>
+                ` : ''}
+                
+                <div class="d-flex flex-wrap mb-4">
+                    <span class="info-badge">
+                        <i class="bi bi-calendar"></i> ${formatarData(evento.dataEvento)}
+                    </span>
+                    <span class="info-badge">
+                        <i class="bi bi-clock"></i> ${evento.horaEvento || 'Horário não informado'}
+                    </span>
+                    <span class="info-badge">
+                        <i class="bi bi-geo-alt"></i> ${evento.localEvento || 'Local não informado'}
+                    </span>
+                    ${evento.precoEvento ? `
+                        <span class="info-badge">
+                            <i class="bi bi-cash"></i> R$ ${evento.precoEvento.toFixed(2)}
+                        </span>` : ''}
+                </div>
+                
+                <div class="mb-4">
+                    <h5 class="mb-2"><i class="bi bi-person"></i> Organizador</h5>
+                    <p>${evento.organizadorEvento}</p>
+                    
+                    ${evento.parceiroEvento ? `
+                        <h5 class="mb-2 mt-3"><i class="bi bi-people"></i> Parceiros</h5>
+                        <p>${evento.parceiroEvento}</p>
+                    ` : ''}
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button class="btn btn-gerenciar" onclick="editarEvento(${evento.idEvento})">
+                        <i class="bi bi-pencil me-2"></i> Editar
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="deletarEvento(${evento.idEvento})">
+                        <i class="bi bi-trash me-2"></i> Excluir
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="verParticipantes(${evento.idEvento})">
+                        <i class="bi bi-people me-2"></i> Participantes
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Se o dispositivo for celular, insere o detalhe abaixo do card
+    if (window.innerWidth <= 768) {
+        const detalhesElement = document.createElement("div");
+        detalhesElement.innerHTML = eventoDetalhe;
+        card.parentElement.appendChild(detalhesElement);
+
+        // Rola para o novo conteúdo exibido
+        window.scrollTo({
+            top: detalhesElement.offsetTop,
+            behavior: 'smooth'
+        });
+    } else {
+        // Caso não seja celular, exibe o painel de detalhes como anteriormente
+        detalheEvento.innerHTML = eventoDetalhe;
+    }
+}
+
+// Função para editar evento
+function editarEvento(idEvento) {
+    window.location.href = `editar-evento.html?id=${idEvento}`;
+}
+
+function verParticipantes(idEvento) {
+    window.location.href = `relatorio-evento-master.html?id=${idEvento}`;
+}
+
+
+// Função para deletar evento
+async function deletarEvento(idEvento) {
+    if (!confirm('Tem certeza que deseja excluir este evento?')) return;
+    
+    try {
+        const response = await fetch(`http://localhost:8080/eventos/excluirEvento/${idEvento}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.status === 401) {
+            throw new Error('Token inválido ou expirado');
+        }
+        if (response.status === 403) {
+            throw new Error('Somente sócios podem excluir eventos');
+        }
+        if (!response.ok) {
+            throw new Error('Erro ao excluir evento');
+        }
+
+        alert('Evento excluído com sucesso!');
+        carregarEventos(); // Recarrega a lista de eventos
+        detalheEvento.innerHTML = `
+            <div class="empty-state">
+                <i class="bi bi-calendar-event"></i>
+                <h3>Selecione um evento</h3>
+                <p>Os detalhes aparecerão aqui assim que você clicar em um item do lado esquerdo.</p>
+            </div>
+        `;
+    } catch (error) {
+        console.error(error);
+        alert(error.message || 'Erro ao excluir evento. Tente novamente.');
+    }
+}
+
+// Função auxiliar para formatar data
+function formatarData(dataString) {
+    if (!dataString) return 'Data não informada';
+    const data = new Date(dataString + 'T12:00:00');
+    return data.toLocaleDateString('pt-BR');
+}
+  </script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciar Eventos - Sócio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after,
+    .active-nav::after {
+      width: 100%;
+    }
+    
+    .content-area {
+      padding: 2rem;
+      background-color: #f8f9fa;
+      min-height: calc(100vh - 72px);
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    /* Estilos do FullCalendar */
+    #calendar {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+    }
+    
+    .fc-event {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      cursor: pointer;
+    }
+    
+    .fc-event:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    
+    .fc-toolbar-title {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .fc-button {
+      background-color: var(--accent-color) !important;
+      border-color: var(--accent-color) !important;
+    }
+    
+    .fc-button:hover {
+      background-color: var(--secondary-color) !important;
+      border-color: var(--secondary-color) !important;
+    }
+    
+    .fc-button-active {
+      background-color: var(--secondary-color) !important;
+    }
+    
+    .evento-modal .modal-header {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .modal-img {
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    
+    /* Estilos específicos para a página de gerenciamento */
+    .management-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .event-actions {
+      display: flex;
+      gap: 5px;
+      margin-top: 15px;
+    }
+    
+    .draggable-event {
+      padding: 8px;
+      margin: 5px 0;
+      background-color: var(--light-color);
+      border-radius: 4px;
+      cursor: move;
+    }
+    
+    .external-events {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+ <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="../socioPages/pagina-inicial-socio.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-conteudo-socio.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-evento-socio.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="calendario-socio-normal.html">Calendário</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/editar-perfil-socios.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+  <!-- Conteúdo Principal -->
+  <div class="container-fluid content-area">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title mb-0">Gerenciar Eventos</h2>
+        <div class="management-actions">
+          <a href="../socioPages/criar-evento.html" class="btn btn-sm" style="background-color: var(--accent-color); color: white;">
+            <i class="bi bi-plus-circle me-1"></i> Criar Evento
+          </a>
+          <button id="toggleExternalEvents" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-list-task me-1"></i> Mostrar Lista de Eventos
+          </button>
+        </div>
+      </div>
+      
+      <div class="external-events" id="externalEvents" style="display: none;">
+        <h5><i class="bi bi-list-check"></i> Todos os Eventos</h5>
+        <div id="eventList"></div>
+      </div>
+      
+      <div id="calendar"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Detalhes do Evento -->
+  <div class="modal fade evento-modal" id="eventoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventoModalTitle">Gerenciar Evento</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <img id="modalEventoImg" src="" class="img-fluid modal-img mb-3" alt="Imagem do Evento">
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="badge bg-light text-dark">
+                  <i class="bi bi-calendar"></i> <span id="modalEventoData"></span>
+                </span>
+                <span class="badge bg-light text-dark">
+                  <i class="bi bi-clock"></i> <span id="modalEventoHora"></span>
+                </span>
+                <span class="badge bg-light text-dark">
+                  <i class="bi bi-geo-alt"></i> <span id="modalEventoLocal"></span>
+                </span>
+                <span class="badge bg-light text-dark" id="modalEventoPrecoContainer">
+                  <i class="bi bi-cash"></i> <span id="modalEventoPreco"></span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h4 id="modalEventoTitulo"></h4>
+              <p class="text-muted" id="modalEventoDescricao"></p>
+              
+              <div class="mb-3">
+                <h6><i class="bi bi-person"></i> Organizador</h6>
+                <p id="modalEventoOrganizador"></p>
+              </div>
+              
+              <div class="mb-3" id="modalEventoParceiroContainer">
+                <h6><i class="bi bi-people"></i> Parceiros</h6>
+                <p id="modalEventoParceiro"></p>
+              </div>
+              
+              <div class="event-actions">
+                <button id="editEventBtn" class="btn btn-sm btn-primary">
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação de Exclusão -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir este evento? Esta ação não pode ser desfeita.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer py-4 mt-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="d-flex align-items-center">
+            <img src="../img/LogoFormatada.png" alt="Logo da TemQueSer" class="img-fluid me-3" width="40" height="40">
+            <h5 class="mb-0 text-white">TemQueSer</h5>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">© 2025 TemQueSer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/interaction/main.min.js"></script>
+
+  <!-- JS Lógica para o Gerenciamento de Eventos -->
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Verificação de autenticação
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+        alert('Sessão expirada. Por favor, faça login novamente.');
+        window.location.href = '../pagina-home.html';
+        return;
+    }
+
+    // Elementos do DOM
+    const calendarEl = document.getElementById('calendar');
+    const eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
+    const toggleExternalEventsBtn = document.getElementById('toggleExternalEvents');
+    const externalEventsDiv = document.getElementById('externalEvents');
+    const eventListDiv = document.getElementById('eventList');
+    
+    // Variáveis de estado
+    let currentEventId = null;
+    let allEvents = [];
+
+    // Funções auxiliares
+    const helpers = {
+        formatarData: (dataString) => {
+            if (!dataString) return 'Data não informada';
+            const date = new Date(dataString);
+            // Adiciona um dia para corrigir o deslocamento de fuso horário
+            date.setDate(date.getDate() + 1);
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('pt-BR', options);
+        },
+        
+        preencherModalEvento: (evento) => {
+            document.getElementById('eventoModalTitle').textContent = `Detalhes: ${evento.title}`;
+            document.getElementById('modalEventoTitulo').textContent = evento.title;
+            document.getElementById('modalEventoDescricao').textContent = 
+                evento.extendedProps.detalhe || 'Nenhum detalhe disponível';
+            document.getElementById('modalEventoData').textContent = helpers.formatarData(evento.start);
+            document.getElementById('modalEventoHora').textContent = 
+                evento.extendedProps.hora || 'Horário não informado';
+            document.getElementById('modalEventoLocal').textContent = 
+                evento.extendedProps.local || 'Local não informado';
+            document.getElementById('modalEventoOrganizador').textContent = 
+                evento.extendedProps.organizador || 'Organizador não informado';
+            
+            const imgElement = document.getElementById('modalEventoImg');
+            if (evento.extendedProps.imgUrl) {
+                imgElement.src = evento.extendedProps.imgUrl;
+                imgElement.style.display = 'block';
+            } else {
+                imgElement.style.display = 'none';
+            }
+            
+            const precoContainer = document.getElementById('modalEventoPrecoContainer');
+            if (evento.extendedProps.preco) {
+                document.getElementById('modalEventoPreco').textContent = 
+                    'R$ ' + parseFloat(evento.extendedProps.preco).toFixed(2);
+                precoContainer.style.display = 'inline-block';
+            } else {
+                precoContainer.style.display = 'none';
+            }
+            
+            const parceiroContainer = document.getElementById('modalEventoParceiroContainer');
+            if (evento.extendedProps.parceiro) {
+                document.getElementById('modalEventoParceiro').textContent = evento.extendedProps.parceiro;
+                parceiroContainer.style.display = 'block';
+            } else {
+                parceiroContainer.style.display = 'none';
+            }
+        },
+        
+        atualizarListaEventos: (events) => {
+            eventListDiv.innerHTML = '';
+            
+            if (events.length === 0) {
+                eventListDiv.innerHTML = '<p class="text-muted">Nenhum evento encontrado.</p>';
+                return;
+            }
+            
+            events.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.className = 'draggable-event';
+                eventElement.setAttribute('data-event-id', event.idEvento);
+                eventElement.innerHTML = `
+                    <strong>${event.tituloEvento}</strong>
+                    <small class="d-block">${helpers.formatarData(event.dataEvento)}</small>
+                    <div class="event-actions mt-1">
+                        <button class="btn btn-sm btn-outline-primary btn-edit-event" data-event-id="${event.idEvento}">
+                            <i class="bi bi-pencil"></i> Editar
+                        </button>
+                    </div>
+                `;
+                
+                eventListDiv.appendChild(eventElement);
+            });
+            
+            document.querySelectorAll('.btn-edit-event').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const eventId = this.getAttribute('data-event-id');
+                    window.location.href = `../socioPages/editar-evento.html?id=${eventId}`;
+                });
+            });
+        }
+    };
+
+    // Configuração do calendário
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'pt-br',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        buttonText: {
+            today: 'Hoje',
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia'
+        },
+        editable: true,
+        droppable: true,
+        selectable: true,
+        selectMirror: true,
+        dayMaxEvents: true,
+        events: async function(fetchInfo, successCallback, failureCallback) {
+            try {
+                const response = await fetch(`http://localhost:8080/eventos?start=${fetchInfo.startStr}&end=${fetchInfo.endStr}`, {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error(`Erro ${response.status}`);
+                
+                const eventos = await response.json();
+                allEvents = eventos;
+                
+                const eventosCalendario = eventos.map(evento => ({
+                    id: evento.idEvento,
+                    title: evento.tituloEvento,
+                    start: evento.dataEvento,
+                    allDay: true,
+                    extendedProps: {
+                        detalhe: evento.detalheEvento,
+                        local: evento.localEvento,
+                        organizador: evento.organizadorEvento,
+                        parceiro: evento.parceiroEvento,
+                        preco: evento.precoEvento,
+                        hora: evento.horaEvento,
+                        imgUrl: evento.imgUrlEvento
+                    }
+                }));
+                
+                successCallback(eventosCalendario);
+                helpers.atualizarListaEventos(eventos);
+            } catch (error) {
+                console.error("Erro ao carregar eventos:", error);
+                failureCallback(error);
+            }
+        },
+        eventClick: function(info) {
+            currentEventId = info.event.id;
+            helpers.preencherModalEvento(info.event);
+            
+            // Configura o botão de edição para redirecionar para a página de edição
+            document.getElementById('editEventBtn').addEventListener('click', function() {
+                window.location.href = `../socioPages/editar-evento.html?id=${currentEventId}`;
+            });
+            
+            eventoModal.show();
+        },
+        eventDrop: async function(info) {
+            try {
+                const eventoAtualizado = {
+                    dataEvento: info.event.start.toISOString(),
+                    tituloEvento: info.event.title,
+                    detalheEvento: info.event.extendedProps.detalhe,
+                    localEvento: info.event.extendedProps.local,
+                    organizadorEvento: info.event.extendedProps.organizador,
+                    parceiroEvento: info.event.extendedProps.parceiro,
+                    precoEvento: info.event.extendedProps.preco,
+                    horaEvento: info.event.extendedProps.hora,
+                    imgUrlEvento: info.event.extendedProps.imgUrl
+                };
+
+                const response = await fetch(`http://localhost:8080/eventos/${info.event.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(eventoAtualizado)
+                });
+                
+                if (!response.ok) throw new Error('Falha ao atualizar');
+                
+                info.event.setProp('start', info.event.start);
+                calendar.refetchEvents();
+                
+            } catch (error) {
+                console.error('Erro ao mover evento:', error);
+                info.revert();
+            }
+        },
+        eventDidMount: function(info) {
+            if (info.event.extendedProps.detalhe) {
+                info.el.setAttribute('title', info.event.extendedProps.detalhe);
+                info.el.setAttribute('data-bs-toggle', 'tooltip');
+                new bootstrap.Tooltip(info.el);
+            }
+        }
+    });
+    
+    calendar.render();
+    
+    // Event listeners
+    toggleExternalEventsBtn.addEventListener('click', function() {
+        if (externalEventsDiv.style.display === 'none') {
+            externalEventsDiv.style.display = 'block';
+            toggleExternalEventsBtn.innerHTML = '<i class="bi bi-list-task me-1"></i> Ocultar Lista';
+        } else {
+            externalEventsDiv.style.display = 'none';
+            toggleExternalEventsBtn.innerHTML = '<i class="bi bi-list-task me-1"></i> Mostrar Lista';
+        }
+    });
+
+    // Atualização periódica
+    setInterval(() => {
+        calendar.refetchEvents();
+    }, 300000); // 5 minutos
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Evento - Sócio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b4332;
+      --secondary-color: #2d6a4f;
+      --accent-color: #40916c;
+      --light-color: #d8f3dc;
+      --dark-color: #081c15;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    #formEditarEvento {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .form-label {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 0.25rem rgba(64, 145, 108, 0.25);
+    }
+    
+    #previewImagem {
+      max-height: 250px;
+      max-width: 100%;
+      display: none;
+      margin-top: 1rem;
+      border: 2px solid var(--light-color);
+      border-radius: 8px;
+      padding: 8px;
+      object-fit: contain;
+      background-color: #f8f9fa;
+    }
+    
+    .btn-primary {
+      background-color: var(--accent-color);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-secondary {
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-danger {
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .error {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .input-group-text {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border: 1px solid #ced4da;
+    }
+    
+    h1 {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .container {
+      padding-top: 2rem;
+      padding-bottom: 4rem;
+    }
+    
+    .preview-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      #formEditarEvento {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+ <header class="bg-white shadow-sm sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="d-flex align-items-center">
+                <img src="/Codigo/TemQueSer - Front/img/LogoFormatada.png" alt="TemQueSer logo" class="img-fluid me-2" width="50" height="50">
+                <span class="navbar-brand mb-0 h1 text-primary-custom">TemQueSer</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active-nav text-dark" href="../socioPages/pagina-inicial-socio.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-conteudo-socio.html">Conteúdo</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/visualizar-evento-socio.html">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="calendario-socio-normal.html">Calendário</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link text-dark" href="../socioPages/editar-perfil-socios.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="../pagina-home.html">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+
+  <div class="container py-4">
+    <h1><i class="bi bi-calendar-event me-2"></i> Editar Evento</h1>
+    
+    <div id="formEditarEvento">
+      <div class="header-section">
+        <h2 class="mb-0"><i class="bi bi-pencil-square me-2"></i> Editar Evento Existente</h2>
+      </div>
+
+      <div class="mb-4">
+        <label for="tituloEvento" class="form-label">Título</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+          <input type="text" class="form-control" id="tituloEvento" placeholder="Digite o título do evento" required>
+        </div>
+        <div class="error" id="tituloError"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="detalheEvento" class="form-label">Detalhes</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+          <textarea class="form-control" id="detalheEvento" rows="5" placeholder="Digite os detalhes do evento" required></textarea>
+        </div>
+        <div class="error" id="detalheError"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label for="dataEvento" class="form-label">Data</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+            <input type="date" class="form-control" id="dataEvento" required>
+          </div>
+          <div class="error" id="dataError"></div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <label for="horaEvento" class="form-label">Hora</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-clock"></i></span>
+            <input type="time" class="form-control" id="horaEvento" required>
+          </div>
+          <div class="error" id="horaError"></div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="organizadorEvento" class="form-label">Organizador</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+          <input type="text" class="form-control" id="organizadorEvento" placeholder="Digite o organizador do evento" required>
+        </div>
+        <div class="error" id="organizadorError"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="localEvento" class="form-label">Local</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+          <input type="text" class="form-control" id="localEvento" placeholder="Digite o local do evento" required>
+        </div>
+        <div class="error" id="localError"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="parceiroEvento" class="form-label">Parceiros (opcional)</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-people"></i></span>
+          <input type="text" class="form-control" id="parceiroEvento" placeholder="Digite os parceiros do evento">
+        </div>
+        <div class="error" id="parceiroError"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="precoEvento" class="form-label">Preço (opcional)</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+          <input type="number" step="0.01" class="form-control" id="precoEvento" placeholder="Digite o preço do evento">
+        </div>
+        <div class="error" id="precoError"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="imgUrlEvento" class="form-label">URL da Imagem (opcional)</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-image"></i></span>
+          <input type="url" class="form-control" id="imgUrlEvento" placeholder="Digite a URL da imagem">
+        </div>
+        <div class="error" id="imgUrlError"></div>
+        <div class="preview-container">
+          <img id="previewImagem" src="#" alt="Pré-visualização">
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-5">
+        <button type="button" class="btn btn-danger" onclick="confirmarExclusao()">
+          <i class="bi bi-trash me-2"></i> Excluir Evento
+        </button>
+        <div>
+          <button type="button" class="btn btn-secondary me-2" onclick="cancelarEdicao()">
+            <i class="bi bi-x-circle me-2"></i> Cancelar
+          </button>
+          <button type="button" class="btn btn-primary" onclick="atualizarEvento()">
+            <i class="bi bi-save me-2"></i> Salvar Alterações
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação de Exclusão -->
+  <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i> Confirmar Exclusão</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir este evento permanentemente? Esta ação não pode ser desfeita.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" onclick="excluirEvento()">Confirmar Exclusão</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  const token = localStorage.getItem('jwtToken');
+if (!token) {
+  alert('Você precisa estar logado para acessar esta página.');
+  window.location.href = '../index.html';
+}
+
+// Obtém o ID do evento da URL
+const urlParams = new URLSearchParams(window.location.search);
+const idEvento = urlParams.get('id');
+const confirmarExclusaoModal = new bootstrap.Modal(document.getElementById('confirmarExclusaoModal'));
+
+// Carrega os dados do evento ao abrir a página
+document.addEventListener('DOMContentLoaded', carregarEvento);
+
+// Configura o preview da imagem
+document.getElementById('imgUrlEvento').addEventListener('input', function() {
+  const preview = document.getElementById('previewImagem');
+  if (this.value) {
+    preview.src = this.value;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+});
+
+async function carregarEvento() {
+  if (!idEvento) {
+    alert('Evento não identificado.');
+    window.location.href = 'visualizar-evento-socio.html';
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:8080/eventos/${idEvento}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Evento não encontrado');
+    }
+
+    const evento = await response.json();
+    preencherFormulario(evento);
+
+  } catch (error) {
+    console.error('Erro ao carregar evento:', error);
+    alert(error.message || 'Erro ao carregar evento');
+    window.location.href = 'visualizar-evento-socio.html';
+  }
+}
+
+function preencherFormulario(evento) {
+  document.getElementById('tituloEvento').value = evento.tituloEvento || '';
+  document.getElementById('detalheEvento').value = evento.detalheEvento || '';
+  document.getElementById('dataEvento').value = evento.dataEvento ? evento.dataEvento.split('T')[0] : '';
+  document.getElementById('horaEvento').value = evento.horaEvento || '';
+  document.getElementById('organizadorEvento').value = evento.organizadorEvento || '';
+  document.getElementById('localEvento').value = evento.localEvento || '';
+  document.getElementById('parceiroEvento').value = evento.parceiroEvento || '';
+  document.getElementById('precoEvento').value = evento.precoEvento || '';
+  document.getElementById('imgUrlEvento').value = evento.imgUrlEvento || '';
+  
+  // Mostra preview se houver imagem
+  if (evento.imgUrlEvento) {
+    const preview = document.getElementById('previewImagem');
+    preview.src = evento.imgUrlEvento;
+    preview.style.display = 'block';
+  }
+}
+
+async function atualizarEvento() {
+  if (!validarFormulario()) return;
+
+  const eventoAtualizado = {
+    tituloEvento: document.getElementById('tituloEvento').value,
+    detalheEvento: document.getElementById('detalheEvento').value,
+    dataEvento: document.getElementById('dataEvento').value,
+    horaEvento: document.getElementById('horaEvento').value,
+    organizadorEvento: document.getElementById('organizadorEvento').value,
+    localEvento: document.getElementById('localEvento').value,
+    parceiroEvento: document.getElementById('parceiroEvento').value || null,
+    precoEvento: document.getElementById('precoEvento').value ? 
+                 parseFloat(document.getElementById('precoEvento').value) : null,
+    imgUrlEvento: document.getElementById('imgUrlEvento').value || null
+  };
+
+  try {
+    const response = await fetch(`http://localhost:8080/eventos/${idEvento}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(eventoAtualizado)
+    });
+
+    if (response.status === 401) {
+      throw new Error('Token inválido ou expirado');
+    }
+    if (response.status === 403) {
+      throw new Error('Somente sócios podem editar eventos');
+    }
+    if (!response.ok) {
+      throw new Error('Erro ao atualizar evento');
+    }
+
+    alert('Evento atualizado com sucesso!');
+    window.location.href = 'visualizar-evento-socio.html';
+
+  } catch (error) {
+    console.error('Erro ao atualizar evento:', error);
+    alert(error.message || 'Erro ao atualizar evento. Tente novamente.');
+  }
+}
+
+function validarFormulario() {
+  let valido = true;
+  
+  // Validação dos campos obrigatórios
+  const camposObrigatorios = [
+    { id: 'tituloEvento', errorId: 'tituloError', mensagem: 'O título é obrigatório' },
+    { id: 'detalheEvento', errorId: 'detalheError', mensagem: 'Os detalhes são obrigatórios' },
+    { id: 'dataEvento', errorId: 'dataError', mensagem: 'A data é obrigatória' },
+    { id: 'horaEvento', errorId: 'horaError', mensagem: 'A hora é obrigatória' },
+    { id: 'organizadorEvento', errorId: 'organizadorError', mensagem: 'O organizador é obrigatório' },
+    { id: 'localEvento', errorId: 'localError', mensagem: 'O local é obrigatório' }
+  ];
+
+  camposObrigatorios.forEach(campo => {
+    const elemento = document.getElementById(campo.id);
+    const erroElemento = document.getElementById(campo.errorId);
+    
+    if (!elemento.value.trim()) {
+      erroElemento.textContent = campo.mensagem;
+      valido = false;
+    } else {
+      erroElemento.textContent = '';
+    }
+  });
+
+  return valido;
+}
+
+function cancelarEdicao() {
+  if (confirm('Tem certeza que deseja cancelar as alterações?')) {
+    window.location.href = 'visualizar-evento-socio.html';
+  }
+}
+
+function confirmarExclusao() {
+  confirmarExclusaoModal.show();
+}
+
+async function excluirEvento() {
+  try {
+    const response = await fetch(`http://localhost:8080/eventos/excluirEvento/${idEvento}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (response.status === 401) {
+      throw new Error('Token inválido ou expirado');
+    }
+    if (response.status === 403) {
+      throw new Error('Somente sócios podem excluir eventos');
+    }
+    if (!response.ok) {
+      throw new Error('Erro ao excluir evento');
+    }
+
+    confirmarExclusaoModal.hide();
+    alert('Evento excluído com sucesso!');
+    window.location.href = 'visualizar-evento-socio.html';
+
+  } catch (error) {
+    console.error('Erro ao excluir evento:', error);
+    alert(error.message || 'Erro ao excluir evento. Tente novamente.');
+    confirmarExclusaoModal.hide();
+  }
+}
+  </script>
+</body>
+</html>
